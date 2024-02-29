@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "959096468627",
+    "project_id": "echogram-dd7e4",
+    "storage_bucket": "echogram-dd7e4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:959096468627:android:c2118bba56966855144966",
+        "android_client_info": {
+          "package_name": "com.example.echogram"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfcEYG5HGPSUZ8anrJ-dkMs5e_uCdmjmc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
