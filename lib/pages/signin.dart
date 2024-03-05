@@ -14,29 +14,29 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
-  String email = "", password = "", name="",pic="", username="",id="";
+  String email = "", password = "", name = "", pic = "", username = "", id = "";
   TextEditingController usermailcontroller = new TextEditingController();
   TextEditingController userpasswordcontroller = new TextEditingController();
 
-  final _formkey= GlobalKey<FormState>();
+  final _formkey = GlobalKey<FormState>();
 
   userLogin() async {
     try {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
 
-      QuerySnapshot querySnapshot = await DatabaseMethods().getUserbyemail(email);
+      QuerySnapshot querySnapshot =
+          await DatabaseMethods().getUserbyemail(email);
 
-      // name = "${querySnapshot.docs[0]["Name"]}";
-      // username = "${querySnapshot.docs[0]["username"]}";
-      // pic = "${querySnapshot.docs[0]["Photo"]}";
-      // id = querySnapshot.docs[0].id;
+      name = "${querySnapshot.docs[0]["Name"]}";
+      username = "${querySnapshot.docs[0]["username"]}";
+      pic = "${querySnapshot.docs[0]["Photo"]}";
+      id = querySnapshot.docs[0].id;
 
       await SharedPreferenceHelp().saveUserDisplayName(name);
       await SharedPreferenceHelp().saveUserName(username);
       await SharedPreferenceHelp().saveUserId(id);
       await SharedPreferenceHelp().saveUserPic(pic);
-
 
       Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
     } on FirebaseAuthException catch (e) {
@@ -50,8 +50,8 @@ class _SignInState extends State<SignIn> {
             ),
           ),
         );
-      }else if(e.code == 'wrong-password'){
-          ScaffoldMessenger.of(context).showSnackBar(
+      } else if (e.code == 'wrong-password') {
+        ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             backgroundColor: Color.fromARGB(255, 112, 149, 9),
             content: Text(
@@ -148,8 +148,8 @@ class _SignInState extends State<SignIn> {
                                 child: TextFormField(
                                   controller: usermailcontroller,
                                   validator: (value) {
-                                    if(value==null || value.isEmpty){
-                                        return 'Please Enter E-mail';
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please Enter E-mail';
                                     }
                                     return null;
                                   },
@@ -184,8 +184,8 @@ class _SignInState extends State<SignIn> {
                                 child: TextFormField(
                                   controller: userpasswordcontroller,
                                   validator: (value) {
-                                    if(value==null || value.isEmpty){
-                                        return 'Please Enter Password';
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please Enter Password';
                                     }
                                     return null;
                                   },
@@ -216,11 +216,11 @@ class _SignInState extends State<SignIn> {
                                 height: 50,
                               ),
                               GestureDetector(
-                                onTap: (){
-                                  if(_formkey.currentState!.validate()){
+                                onTap: () {
+                                  if (_formkey.currentState!.validate()) {
                                     setState(() {
-                                      email=usermailcontroller.text;
-                                      password=userpasswordcontroller.text;
+                                      email = usermailcontroller.text;
+                                      password = userpasswordcontroller.text;
                                     });
                                   }
                                   userLogin();
