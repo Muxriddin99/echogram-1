@@ -10,22 +10,32 @@ class ForgotPassword extends StatefulWidget {
 }
 
 class _ForgotPasswordState extends State<ForgotPassword> {
+  String email = "";
+  final _formkey = GlobalKey<FormState>();
 
-String email = "";
-final _formkey = GlobalKey<FormState>();
+  TextEditingController usermailcontroller = new TextEditingController();
 
-TextEditingController usermailcontroller=new TextEditingController();
-
-resetPassword()async {
-  try{
-    await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Password Reset Email has ben sent",style: TextStyle(fontSize:18.0),),),);
-  } on FirebaseAuthException catch (e){
-    if (e.code == "user-not-found"){
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("No User found for that email.",style: TextStyle(fontSize: 18.0),)));
+  resetPassword() async {
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            "Password Reset Email has ben sent",
+            style: TextStyle(fontSize: 18.0),
+          ),
+        ),
+      );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == "user-not-found") {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(
+          "No User found for that email.",
+          style: TextStyle(fontSize: 18.0),
+        )));
+      }
     }
   }
-}
 
   @override
   Widget build(BuildContext context) {
@@ -87,6 +97,7 @@ resetPassword()async {
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(10)),
                         child: Form(
+                          key: _formkey,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -110,8 +121,8 @@ resetPassword()async {
                                 child: TextFormField(
                                   controller: usermailcontroller,
                                   validator: (value) {
-                                    if(value==null || value.isEmpty){
-                                        return 'Please Enter E-mail';
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please Enter E-mail';
                                     }
                                     return null;
                                   },
@@ -123,13 +134,17 @@ resetPassword()async {
                                       )),
                                 ),
                               ),
-                             
                               SizedBox(
                                 height: 50,
                               ),
                               GestureDetector(
-                                onTap: (){
-                                 Navigator.push(context,MaterialPageRoute(builder: (context)=>SignUp()));
+                                onTap: () {
+                                  if (_formkey.currentState!.validate()) {
+                                    setState(() {
+                                      email = usermailcontroller.text;
+                                    });
+                                    resetPassword();
+                                  }
                                 },
                                 child: Center(
                                   child: Material(
@@ -171,12 +186,20 @@ resetPassword()async {
                         "Don't have an account?",
                         style: TextStyle(color: Colors.black, fontSize: 16.0),
                       ),
-                      Text(
-                        " Sign Up Now!",
-                        style: TextStyle(
-                            color: Colors.teal,
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.w500),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SignUp()));
+                        },
+                        child: Text(
+                          " Sign Up Now!",
+                          style: TextStyle(
+                              color: Colors.teal,
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w500),
+                        ),
                       )
                     ],
                   )

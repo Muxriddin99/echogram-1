@@ -28,10 +28,10 @@ class _SignInState extends State<SignIn> {
       QuerySnapshot querySnapshot =
           await DatabaseMethods().getUserbyemail(email);
 
-      name = "${querySnapshot.docs[0]["Name"]}";
-      username = "${querySnapshot.docs[0]["username"]}";
-      pic = "${querySnapshot.docs[0]["Photo"]}";
-      id = querySnapshot.docs[0].id;
+      // name = "${querySnapshot.docs[0]["Name"]}";
+      // username = "${querySnapshot.docs[0]["username"]}";
+      // pic = "${querySnapshot.docs[0]["Photo"]}";
+      // id = querySnapshot.docs[0].id;
 
       await SharedPreferenceHelp().saveUserDisplayName(name);
       await SharedPreferenceHelp().saveUserName(username);
@@ -202,14 +202,16 @@ class _SignInState extends State<SignIn> {
                               SizedBox(
                                 height: 10.0,
                               ),
-                              Container(
-                                alignment: Alignment.topRight,
-                                child: Text(
-                                  "Forgot Password?",
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 18.0,
-                                      fontWeight: FontWeight.w500),
+                              GestureDetector(
+                                child: Container(
+                                  alignment: Alignment.topRight,
+                                  child: Text(
+                                    "Forgot Password?",
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 18.0,
+                                        fontWeight: FontWeight.w500),
+                                  ),
                                 ),
                               ),
                               SizedBox(
