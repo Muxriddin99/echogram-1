@@ -256,6 +256,18 @@ class _HomeState extends State<Home> {
           decoration: BoxDecoration(
               color: Colors.white, borderRadius: BorderRadius.circular(10)),
           child: Row(children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(72),
+              child: Image.network(
+                data["Photo"],
+                height: 49,
+                width: 49,
+                fit: BoxFit.cover,
+              ),
+            ),
+            SizedBox(
+              width: 9,
+            ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
